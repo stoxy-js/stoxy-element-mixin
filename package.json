@@ -1,0 +1,13 @@
+{
+  "name": "@stoxy/element-mixin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "stoxy-element-mixin.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@stoxy/core": "^0.3.1"
+  }
+}
