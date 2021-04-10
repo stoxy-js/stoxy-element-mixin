@@ -1,8 +1,11 @@
 {
   "name": "@stoxy/element-mixin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The reactive state management system equipped with Web Components.",
   "main": "stoxy-element-mixin.js",
+  "files": [
+    "stoxy-element-mixin.js"
+  ],
   "scripts": {},
   "repository": {
     "type": "git",
