@@ -1,0 +1,9 @@
+{
+    "exclude": ["examples", "dist", "node_modules"],
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist"
+  }
+}
