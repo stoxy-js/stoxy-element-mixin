@@ -1,11 +1,15 @@
 {
   "name": "@stoxy/element-mixin",
   "version": "1.0.0",
-  "description": "",
+  "description": "The reactive state management system equipped with Web Components.",
   "main": "stoxy-element-mixin.js",
   "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stoxy-js/stoxy-element-mixin"
+  },
   "keywords": [],
-  "author": "",
+  "author":  "Matsuuu <huhta.matias@gmail.com> (https://matsu.fi/)",
   "license": "ISC",
   "dependencies": {
     "@stoxy/core": "^0.3.1"
