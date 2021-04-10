@@ -15,9 +15,11 @@ template.innerHTML = `
  *
  * */
 class Clicker extends StoxyElement(HTMLElement) {
-    static stoxyProperties = {
-        key: 'example-data',
-        state: { clicks: 0 },
+    static get stoxyProperties() {
+        return {
+            key: 'example-data',
+            state: { clicks: 0 },
+        }
     };
 
     stoxyUpdated(_updatedProperties) {

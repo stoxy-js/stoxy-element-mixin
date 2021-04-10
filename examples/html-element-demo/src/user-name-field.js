@@ -10,9 +10,11 @@ template.innerHTML = `
 `;
 
 class UsernameField extends StoxyElement(HTMLElement) {
-    static stoxyProperties = {
-        key: 'example-data',
-        state: { username: 'World' },
+    static get stoxyProperties() {
+        return {
+            key: 'example-data',
+            state: { username: 'World' },
+        }
     };
 
     stoxyUpdated() {

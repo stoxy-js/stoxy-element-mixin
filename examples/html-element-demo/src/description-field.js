@@ -8,9 +8,11 @@ template.innerHTML = `
 
 class DescriptionField extends StoxyElement(HTMLElement) {
 
-    static stoxyProperties = {
-        key: "example-data",
-        state: { "description": "This value is updated on keydown from the textarea. Try it out by typing into this field." },
+    static get stoxyProperties() {
+        return {
+            key: "example-data",
+            state: { "description": "This value is updated on keydown from the textarea. Try it out by typing into this field." },
+        }
     }
 
     stoxyUpdated(_changedProperties) {

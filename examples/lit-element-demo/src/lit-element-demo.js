@@ -2,14 +2,16 @@ import { LitElement, html } from 'lit-element';
 import { StoxyElement } from '@stoxy/element-mixin';
 
 export default class LitElementDemo extends StoxyElement(LitElement) {
-    static stoxyProperties = {
-        key: 'example-data',
-        state: {
-            username: 'World',
-            clicks: 0,
-            description: 'This value is updated on in realtime by the textarea',
-        },
-        init: true
+    static get stoxyProperties() {
+        return {
+            key: 'example-data',
+            state: {
+                username: 'World',
+                clicks: 0,
+                description: 'This value is updated on in realtime by the textarea',
+            },
+            init: true
+        }
     };
 
     static get properties() {

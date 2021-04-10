@@ -4,9 +4,11 @@ import { StoxyElement } from '@stoxy/element-mixin';
 
 class Clicker extends StoxyElement(LitElement) {
 
-    static stoxyProperties = {
+    static get stoxyProperties() {
+        return {
         key: 'example-data',
         state: { clicks: 0 },
+        }
     };
 
     static get properties() {
