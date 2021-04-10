@@ -6,12 +6,15 @@ class Clicker extends StoxyElement(LitElement) {
 
     static stoxyProperties = {
         key: 'example-data',
-        initialState: { clicks: 0 },
-        init: false,
+        state: { clicks: 0 },
     };
 
     static get properties() {
         return { clicks: { type: Number } };
+    }
+
+    stoxyUpdated(_updatedProperties) {
+        console.log("State updated!", _updatedProperties)
     }
 
     constructor() {

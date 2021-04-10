@@ -1,4 +1,4 @@
-import { sub, write } from "@stoxy/core";
+import { sub, write, read } from "@stoxy/core";
 
 /**
  * @param {typeof HTMLElement} superclass
@@ -15,42 +15,93 @@ export function StoxyElement(superclass) {
 
                 static stoxyProperties = {
                     key: "stoxy-state-object",
-                    initialState: { foo: "bar" }
+                    state: { foo: "bar" }
                 }
-
             `);
             }
 
             this.__propertiesInUse = []; // Initialized on first update
             this.__stoxyKey = properties.key;
-            this.__initialStoxyState = properties.initialState;
+            this.__initialStoxyState = properties.state;
 
-            sub(this.__stoxyKey, this._updateProperties.bind(this));
+            // Subscribe to update events
+            sub(this.__stoxyKey, this._updateStoxyProperties.bind(this));
 
-            // If init flag is set to false, skip setting initial state properties
-            if (typeof properties.init != "undefined" && properties.init == false) {
-                return;
-            }
-
-            if (Object.keys(this.__initialStoxyState).length > 0) {
-                write(this.__stoxyKey, { ...this.__initialStoxyState });
+            // If init flag is set, initialize state data with given values
+            if (properties.init) {
+                if (Object.keys(this.__initialStoxyState).length > 0) {
+                    write(this.__stoxyKey, { ...this.__initialStoxyState });
+                }
+            } else {
+                // If not a initializing component, first set the initial data given by the component.
+                // Then try to fetch the latest data, 
+                // else fallback to default state values declared in stoxyProperties
+                const updatedProperties = this._updateStoxyPropertyValues(this.__initialStoxyState);
+                this._dispatchStoxyUpdated(updatedProperties);
+                read(this.__stoxyKey).then(data => {
+                    if (!data) {
+                        return;
+                    }
+                    const updatedProperties = this._updateStoxyPropertyValues(data);
+                    this._dispatchStoxyUpdated(updatedProperties);
+                });
             }
         }
 
         /**
+         * Update Properties of the class instance the mixin is
+         * attached to.
+         *
+         * __propertiesInUse is set the first time we update the properties.
+         * __propertiesInUse contains the keys of the state object
+         * which the current class is implementing and maps only those to be updated.
+         *
          * @param {{ key: string, action: string, data: any; }} event
          */
-        _updateProperties(event) {
-            console.log(event);
+        _updateStoxyProperties(event) {
             const data = event.data;
             const keys = Object.keys(data);
+            // Initialize the properties
             if (this.__propertiesInUse.length <= 0) {
                 this._initializeStoxyPropertiesInUse(keys);
             }
-            this.__propertiesInUse.forEach((key) => {
-                this[key] = data[key];
-            });
+            // Iterate through the initialized property keys
+            const updatedProperties = this._updateStoxyPropertyValues(data);
+            this._dispatchStoxyUpdated(updatedProperties);
         }
+
+        /**
+         * @param {{ [x: string]: any; }} [data]
+         */
+        _updateStoxyPropertyValues(data) {
+            const updatedProperties = new Map();
+            this.__propertiesInUse.forEach((key) => {
+                // Don't update unless the value has changed
+                if (this[key] !== data[key]) {
+                    updatedProperties.set(key, {
+                        key,
+                        oldValue: this[key],
+                        newValue: data[key],
+                    });
+                    this[key] = data[key];
+                }
+            });
+            return updatedProperties;
+        }
+
+        /**
+         * @param {Map<string, any>} updatedProperties
+         */
+        _dispatchStoxyUpdated(updatedProperties) {
+            if (updatedProperties.size > 0) {
+                this.stoxyUpdated(updatedProperties);
+            }
+        }
+
+        /**
+         * @param {Map<string, any>} _updatedProperties
+         **/
+        stoxyUpdated(_updatedProperties) { }
 
         /**
          * Enumerate the properties current element wants to use.

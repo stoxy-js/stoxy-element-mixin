@@ -1,27 +1,31 @@
 import { LitElement, html } from 'lit-element';
-import { StoxyElement } from "@stoxy/element-mixin";
+import { StoxyElement } from '@stoxy/element-mixin';
 
 export default class LitElementDemo extends StoxyElement(LitElement) {
-
     static stoxyProperties = {
-        key: "example-data",
-        initialState: { username: "World", clicks: 0, description: "This value is updated on keydown from the other field area. Try it out by typing into this field." }
-    }
+        key: 'example-data',
+        state: {
+            username: 'World',
+            clicks: 0,
+            description: 'This value is updated on in realtime by the textarea',
+        },
+        init: true
+    };
 
     static get properties() {
         return {
             username: { type: String },
             clicks: { type: Number },
-            description: { type: String }
+            description: { type: String },
         };
     }
 
     constructor() {
         super();
 
-        this.username = "";
+        this.username = '';
         this.clicks = 0;
-        this.description = "";
+        this.description = '';
     }
 
     render() {
