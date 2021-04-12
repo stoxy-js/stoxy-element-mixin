@@ -18,7 +18,8 @@ class Clicker extends StoxyElement(HTMLElement) {
     static get stoxyProperties() {
         return {
             key: 'example-data',
-            state: { clicks: 0 },
+            state: { clicks: 0, foo: "bar" },
+            init: true
         }
     };
 

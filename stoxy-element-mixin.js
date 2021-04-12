@@ -1,4 +1,4 @@
-import { sub, write, read } from "@stoxy/core";
+import { sub, write, read, update } from "@stoxy/core";
 
 /**
  * @param {typeof HTMLElement} superclass
@@ -29,8 +29,20 @@ export function StoxyElement(superclass) {
 
             // If init flag is set, initialize state data with given values
             if (properties.init) {
+                // Update the current state instead of write. 
+                // This is done to not overwrite state in the same object
+                // if two objects initialize their own parts of the sate in the same key.
                 if (Object.keys(this.__initialStoxyState).length > 0) {
-                    write(this.__stoxyKey, { ...this.__initialStoxyState });
+                    update(this.__stoxyKey, stateObject => {
+                        let newState = stateObject
+                        if (!newState) {
+                            newState = {};
+                        }
+                        for (const key of Object.keys(this.__initialStoxyState)) {
+                            newState[key] = this.__initialStoxyState[key];
+                        }
+                        return newState;
+                    });
                 }
             } else {
                 // If not a initializing component, first set the initial data given by the component.

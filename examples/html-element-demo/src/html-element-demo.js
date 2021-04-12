@@ -1,3 +1,4 @@
+import { write } from '@stoxy/core';
 import { StoxyElement } from '@stoxy/element-mixin';
 
 const template = document.createElement("template");
@@ -29,6 +30,9 @@ export default class HTMLElementDemo extends StoxyElement(HTMLElement) {
 
         const root = this.attachShadow({ mode: "open" })
         root.appendChild(template.content.cloneNode(true));
+
+        write("foo.bar", "bar");
+        write("foo.biz", "biz")
 
         /** @type { HTMLSpanElement } **/
         this.usernameField = root.querySelector("#username");
