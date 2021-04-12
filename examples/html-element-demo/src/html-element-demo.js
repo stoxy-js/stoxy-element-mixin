@@ -1,4 +1,4 @@
-import { write } from '@stoxy/core';
+import { write, update } from '@stoxy/core';
 import { StoxyElement } from '@stoxy/element-mixin';
 
 const template = document.createElement("template");
@@ -33,6 +33,10 @@ export default class HTMLElementDemo extends StoxyElement(HTMLElement) {
 
         write("foo.bar", "bar");
         write("foo.biz", "biz")
+        update("foo", foo => {
+            foo.beebee = "beebeeee";
+            return foo;
+        });
 
         /** @type { HTMLSpanElement } **/
         this.usernameField = root.querySelector("#username");

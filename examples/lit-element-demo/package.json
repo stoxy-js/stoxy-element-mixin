@@ -21,7 +21,7 @@
         ]
     },
     "dependencies": {
-        "@stoxy/core": "^0.3.1",
+        "@stoxy/core": "^0.3.3",
         "@stoxy/element-mixin": "file:../..",
         "lit-element": "^2.4.0"
     }
