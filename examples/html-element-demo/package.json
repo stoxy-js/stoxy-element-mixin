@@ -21,7 +21,6 @@
         ]
     },
     "dependencies": {
-        "@stoxy/core": "^0.4.0",
         "@stoxy/element-mixin": "file:../.."
     }
 }
