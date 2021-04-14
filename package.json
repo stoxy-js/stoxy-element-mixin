@@ -19,6 +19,6 @@
   "license": "ISC",
   "types": "./dist/stoxy-element-mixin.d.ts",
   "dependencies": {
-    "@stoxy/core": "^0.3.3"
+    "@stoxy/core": "^0.4.0"
   }
 }
